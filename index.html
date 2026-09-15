@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LA CUADRA — portafolios de música urbana, Medellín</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --negro:#0c0b09;
+    --grafito:#1a1815;
+    --grafito-2:#242019;
+    --grafito-3:#2e281f;
+    --madera:#b9834c;
+    --oro:#d7a94a;
+    --oro-dim:#c99a3d;
+    --oliva:#454a30;
+    --oliva-2:#565c3c;
+    --beige:#e9e1cb;
+    --beige-2:#d8cdae;
+    --crema:#f4efe1;
+    --texto:#f2ede0;
+    --muted:#a79d87;
+    --ink:#171512;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--negro); color:var(--texto);
+    font-family:'Inter', sans-serif; overflow-x:hidden;
+  }
+  h1,h2,h3,.stencil{
+    font-family:'Archivo Black', sans-serif; font-weight:400; line-height:1.02;
+    letter-spacing:0.2px; margin:0;
+  }
+  a{color:inherit;}
+  button{font-family:inherit; cursor:pointer;}
+  .eyebrow{ font-size:12px; letter-spacing:3px; text-transform:uppercase; color:var(--oro); font-weight:600; }
+  .grain{
+    position:fixed; inset:0; pointer-events:none; z-index:2; opacity:0.045; mix-blend-mode:overlay;
+    background-image:
+      repeating-linear-gradient(0deg, #fff 0 1px, transparent 1px 3px),
+      repeating-linear-gradient(90deg, #fff 0 1px, transparent 1px 3px);
+  }
+
+  /* ---------- NAV ---------- */
+  .nav{
+    position:sticky; top:0; z-index:50; display:flex; align-items:center; justify-content:space-between;
+    padding:20px 5vw; background:rgba(12,11,9,0.92); backdrop-filter:blur(6px);
+    border-bottom:1px solid rgba(215,169,74,0.25);
+  }
+  .brand{ display:flex; align-items:center; gap:10px; }
+  .brand .mark{ display:flex; gap:3px; align-items:flex-end; height:22px; }
+  .brand .mark i{ width:5px; background:var(--oro); display:block; }
+  .brand .mark i:nth-child(1){ height:60%; } .brand .mark i:nth-child(2){ height:100%; } .brand .mark i:nth-child(3){ height:40%; }
+  .brand .wordmark{ font-family:'Archivo Black'; font-size:18px; letter-spacing:1px; }
+  .nav-links{ display:flex; gap:34px; font-size:12px; letter-spacing:1.5px; text-transform:uppercase; }
+  .nav-links a{ text-decoration:none; opacity:0.8; cursor:pointer; }
+  .nav-links a:hover{ opacity:1; color:var(--oro); }
+  .nav-right{ display:flex; align-items:center; gap:22px; }
+  .btn-gold{
+    background:var(--oro); color:var(--ink); border:none; padding:12px 22px;
+    font-weight:800; font-size:12px; letter-spacing:1px; text-transform:uppercase;
+  }
+  .btn-gold:hover{ background:var(--crema); }
+  .btn-outline{
+    background:transparent; border:1px solid var(--muted); color:var(--texto);
+    padding:11px 21px; font-size:12px; letter-spacing:1px; text-transform:uppercase; font-weight:700;
+  }
+  .btn-outline:hover{ border-color:var(--oro); color:var(--oro); }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative; min-height:88vh; display:flex; align-items:center; padding:0 5vw;
+    background:
+      radial-gradient(ellipse 70% 60% at 78% 30%, rgba(215,169,74,0.16), transparent 60%),
+      radial-gradient(ellipse 50% 50% at 15% 80%, rgba(69,74,48,0.25), transparent 60%),
+      linear-gradient(180deg, #100e0b 0%, #16130f 55%, #0c0b09 100%);
+    overflow:hidden;
+  }
+  .hero::after{
+    content:''; position:absolute; right:-10%; top:-10%; width:60%; height:120%;
+    background:repeating-linear-gradient(100deg, rgba(255,255,255,0.03) 0 2px, transparent 2px 40px);
+    pointer-events:none;
+  }
+  .hero-inner{ max-width:640px; position:relative; z-index:2; padding:60px 0; }
+  .hero h1{ font-size:clamp(42px,7vw,84px); text-transform:uppercase; margin-top:18px; }
+  .hero h1 .g{ color:var(--oro); display:block; }
+  .hero-sub{ max-width:460px; margin-top:22px; font-size:16px; line-height:1.7; color:var(--beige-2); }
+  .hero-actions{ display:flex; gap:14px; margin-top:34px; flex-wrap:wrap; }
+  .hero-side{
+    position:absolute; right:6vw; top:50%; transform:translateY(-50%); text-align:right;
+    display:none; padding-right:22px; border-right:1px solid rgba(215,169,74,0.4);
+  }
+  @media(min-width:1000px){ .hero-side{ display:block; } }
+  .hero-side .eyebrow{ display:block; margin-bottom:6px; }
+  .hero-side div{ font-size:13px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); line-height:2; }
+
+  /* ---------- ICON STRIP ---------- */
+  .strip{
+    display:grid; grid-template-columns:repeat(6,1fr); background:var(--grafito-2);
+    border-top:1px solid rgba(255,255,255,0.06); border-bottom:1px solid rgba(255,255,255,0.06);
+  }
+  .strip-item{ padding:26px 14px; text-align:center; border-right:1px solid rgba(255,255,255,0.06); }
+  .strip-item:last-child{ border-right:none; }
+  .strip-item .ico{ font-size:20px; color:var(--oro); margin-bottom:10px; }
+  .strip-item span{ font-size:11px; letter-spacing:0.6px; text-transform:uppercase; color:var(--muted); line-height:1.4; display:block; }
+  @media(max-width:900px){ .strip{ grid-template-columns:repeat(3,1fr);} .strip-item:nth-child(3){border-right:none;} }
+  @media(max-width:520px){ .strip{ grid-template-columns:repeat(2,1fr);} }
+
+  /* ---------- CONTENIDO PARA CADA FORMATO ---------- */
+  .split{ display:grid; grid-template-columns:1fr 1.5fr; gap:0; padding:90px 5vw; }
+  @media(max-width:900px){ .split{ grid-template-columns:1fr; } }
+  .split-text h2{ font-size:clamp(30px,4vw,48px); text-transform:uppercase; margin:16px 0 20px; }
+  .split-text p{ color:var(--muted); max-width:340px; line-height:1.7; font-size:14px; margin-bottom:20px; }
+  .split-text a{ color:var(--oro); font-size:13px; font-weight:700; text-decoration:none; letter-spacing:0.5px; }
+  .split-text a:hover{ text-decoration:underline; }
+
+  .shots{ display:grid; grid-template-columns:repeat(5,1fr); gap:14px; }
+  @media(max-width:900px){ .shots{ grid-template-columns:repeat(2,1fr); margin-top:30px; } }
+  .shot{
+    position:relative; aspect-ratio:3/4; overflow:hidden; background:linear-gradient(160deg,#3a2f22,#14110d);
+  }
+  .shot::before{ content:''; position:absolute; inset:0; background:radial-gradient(circle at 70% 20%, rgba(215,169,74,0.25), transparent 55%); }
+  .shot::after{ content:''; position:absolute; inset:0; background:linear-gradient(0deg, rgba(0,0,0,0.75), transparent 55%); }
+  .shot .label{ position:absolute; bottom:12px; left:12px; z-index:2; font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:0.4px; max-width:80%; }
+  .shot.v2{ background:linear-gradient(160deg,#2c3320,#14110d); }
+  .shot.v3{ background:linear-gradient(160deg,#403322,#14110d); }
+  .shot.v4{ background:linear-gradient(160deg,#332a1d,#14110d); }
+  .shot.quote{
+    background:linear-gradient(160deg, var(--oliva), var(--oliva-2));
+    display:flex; align-items:flex-end; padding:18px;
+  }
+  .shot.quote::before, .shot.quote::after{ content:none; }
+  .shot.quote p{ font-family:'Archivo Black'; font-size:17px; line-height:1.25; text-transform:uppercase; color:var(--crema); }
+
+  /* ---------- SECTION HEAD / MURO ---------- */
+  .section-head{ padding:20px 5vw 10px; display:flex; align-items:flex-end; justify-content:space-between; gap:20px; flex-wrap:wrap; }
+  .section-head h2{ font-size:clamp(30px,4vw,48px); text-transform:uppercase; }
+  .section-head p{ color:var(--muted); max-width:320px; font-size:13px; line-height:1.6; }
+
+  .muro{ padding:30px 5vw 90px; display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
+  @media(max-width:1000px){ .muro{ grid-template-columns:repeat(2,1fr);} }
+  @media(max-width:560px){ .muro{ grid-template-columns:1fr;} }
+
+  .card{ background:var(--grafito-2); border:1px solid rgba(255,255,255,0.06); }
+  .card:hover{ border-color:rgba(215,169,74,0.5); }
+  .card-kicker{ font-size:10px; font-weight:700; letter-spacing:1px; color:var(--oro); text-transform:uppercase; padding:14px 14px 0; display:block; }
+  .thumb{ width:100%; aspect-ratio:4/3; position:relative; margin-top:10px; background:linear-gradient(150deg,#332a1d,#14110d); overflow:hidden; }
+  .thumb.photo{ background:linear-gradient(150deg,#3a2f22,#14110d); }
+  .thumb.combo{ background:linear-gradient(150deg, var(--oliva), var(--oro-dim)); }
+  .thumb::after{ content:''; position:absolute; inset:0; background:radial-gradient(circle at 75% 15%, rgba(215,169,74,0.2), transparent 55%); }
+  .play-dot{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; z-index:2; }
+  .play-dot span{ width:46px; height:46px; border-radius:50%; border:1.5px solid var(--crema); display:flex; align-items:center; justify-content:center; }
+  .play-dot span::after{ content:''; border-left:13px solid var(--crema); border-top:8px solid transparent; border-bottom:8px solid transparent; margin-left:3px; }
+  .wave{ display:flex; align-items:flex-end; gap:3px; height:40px; margin:10px 14px 0; }
+  .wave i{ flex:1; background:var(--oro); display:block; opacity:0.85; }
+  .combo-label{ position:absolute; bottom:8px; left:8px; z-index:2; background:var(--negro); color:var(--oro); font-size:10px; font-weight:800; padding:4px 8px; text-transform:uppercase; }
+  .card-body{ padding:12px 14px 16px; }
+  .card h3{ font-family:'Inter'; font-weight:800; font-size:15px; text-transform:none; margin-bottom:4px; }
+  .card .meta{ font-size:11px; color:var(--muted); margin-bottom:8px; }
+  .card-foot{ display:flex; align-items:center; justify-content:space-between; font-size:11px; }
+  .artist-link{ color:var(--oro); cursor:pointer; text-decoration:none; font-weight:700; }
+  .artist-link:hover{ text-decoration:underline; }
+
+  footer{
+    padding:36px 5vw; display:flex; justify-content:space-between; flex-wrap:wrap; gap:14px;
+    border-top:1px solid rgba(255,255,255,0.08); font-size:11px; letter-spacing:0.8px; text-transform:uppercase; color:var(--muted);
+  }
+  footer .tagline{ display:flex; gap:14px; flex-wrap:wrap; }
+  .admin-access{ color:var(--muted); text-decoration:underline; text-underline-offset:3px; cursor:pointer; opacity:0.7; }
+  .admin-access:hover{ opacity:1; color:var(--oro); }
+
+  /* ================= PERFIL ================= */
+  #profile{ display:none; }
+  .profile-wrap{ display:grid; grid-template-columns:280px 1fr; min-height:100vh; }
+  @media(max-width:860px){ .profile-wrap{ grid-template-columns:1fr; } }
+  .profile-side{ background:var(--grafito); padding:44px 30px; border-right:1px solid rgba(255,255,255,0.07); }
+  .back-btn{ background:none; border:1px solid var(--muted); color:var(--texto); padding:9px 15px; font-size:11px; letter-spacing:1px; text-transform:uppercase; font-weight:700; margin-bottom:40px; }
+  .back-btn:hover{ border-color:var(--oro); color:var(--oro); }
+  .profile-side h1{ font-size:clamp(30px,4vw,42px); text-transform:uppercase; margin-bottom:14px; }
+  .profile-side .eyebrow{ display:block; margin-bottom:16px; }
+  .profile-nav{ list-style:none; padding:0; margin:34px 0; display:flex; flex-direction:column; gap:16px; }
+  .profile-nav li{ font-size:13px; text-transform:uppercase; letter-spacing:1px; color:var(--muted); border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:12px; }
+  .profile-tags{ display:flex; gap:8px; flex-wrap:wrap; }
+  .ptag{ border:1px solid var(--muted); padding:5px 10px; font-size:10px; text-transform:uppercase; letter-spacing:0.5px; }
+  .ptag.fill{ background:var(--oro); color:var(--ink); border-color:var(--oro); font-weight:700; }
+
+  .profile-hero{
+    position:relative; min-height:64vh; display:flex; flex-direction:column; justify-content:flex-end;
+    background: radial-gradient(ellipse 70% 60% at 75% 20%, rgba(215,169,74,0.18), transparent 60%),
+                linear-gradient(160deg,#3a2f22,#0f0d0a);
+    padding:5vw;
+  }
+  .profile-hero h2{ font-size:clamp(34px,6vw,68px); text-transform:uppercase; }
+  .profile-hero .role{ color:var(--oro); font-size:13px; letter-spacing:2px; text-transform:uppercase; margin:10px 0 24px; }
+  .profile-actions{ display:flex; gap:14px; margin-bottom:30px; }
+  .player{
+    background:rgba(12,11,9,0.75); border:1px solid rgba(255,255,255,0.1); padding:14px 18px;
+    display:flex; align-items:center; gap:16px; max-width:520px;
+  }
+  .player .pd{ width:34px; height:34px; border-radius:50%; border:1.5px solid var(--oro); display:flex; align-items:center; justify-content:center; flex:0 0 auto; }
+  .player .pd::after{ content:''; border-left:9px solid var(--oro); border-top:6px solid transparent; border-bottom:6px solid transparent; margin-left:2px; }
+  .player .track{ flex:1; }
+  .player .track b{ display:block; font-size:12px; }
+  .player .track span{ font-size:10px; color:var(--muted); }
+  .player .bar{ height:2px; background:rgba(255,255,255,0.15); margin-top:6px; position:relative; }
+  .player .bar i{ position:absolute; left:0; top:0; height:100%; width:38%; background:var(--oro); }
+
+  .stats{ display:flex; gap:40px; padding:26px 5vw; flex-wrap:wrap; border-bottom:1px solid rgba(255,255,255,0.08); }
+  .stat b{ font-family:'Archivo Black'; font-size:28px; display:block; color:var(--oro); }
+  .stat span{ font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.6px; }
+
+  .profile-cols{ display:grid; grid-template-columns:repeat(4,1fr); gap:0; }
+  @media(max-width:860px){ .profile-cols{ grid-template-columns:repeat(2,1fr);} }
+  .pcol{ padding:34px 26px; border-right:1px solid rgba(255,255,255,0.07); border-top:1px solid rgba(255,255,255,0.07); }
+  .pcol:last-child{ border-right:none; }
+  .pcol h3{ font-family:'Inter'; font-weight:800; font-size:15px; text-transform:uppercase; margin-bottom:4px; letter-spacing:0.5px; }
+  .pcol .sub{ font-size:11px; color:var(--muted); margin-bottom:16px; }
+  .pcol .mini{ aspect-ratio:4/3; background:linear-gradient(150deg,#332a1d,#14110d); position:relative; margin-bottom:8px; }
+  .pcol .mini::after{ content:''; position:absolute; inset:0; background:radial-gradient(circle at 75% 20%, rgba(215,169,74,0.2), transparent 55%); }
+
+  /* ================= ADMIN ================= */
+  #admin{ display:none; }
+  .admin-top{ display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap; padding:22px 5vw; border-bottom:1px solid rgba(215,169,74,0.4); background:var(--grafito); }
+  .admin-top-left{ display:flex; align-items:center; gap:16px; }
+  .admin-badge{ background:var(--oro); color:var(--ink); font-size:10px; font-weight:800; padding:5px 10px; text-transform:uppercase; letter-spacing:0.6px; }
+  .admin-top h1{ font-size:clamp(22px,3vw,32px); text-transform:uppercase; }
+  .admin-note{ font-size:11px; color:var(--muted); margin-top:4px; }
+
+  .admin-grid{ display:grid; grid-template-columns:290px 1fr; min-height:70vh; }
+  @media(max-width:820px){ .admin-grid{ grid-template-columns:1fr; } }
+  .admin-sidebar{ background:var(--grafito); padding:24px 20px; border-right:1px solid rgba(255,255,255,0.08); }
+  .admin-sidebar h3{ font-size:11px; text-transform:uppercase; color:var(--muted); letter-spacing:1px; margin-bottom:14px; font-family:'Inter'; font-weight:700; }
+  .artist-row{ display:flex; align-items:center; gap:12px; padding:10px; margin-bottom:8px; cursor:pointer; border:1px solid transparent; }
+  .artist-row:hover{ border-color:rgba(255,255,255,0.15); }
+  .artist-row.active{ border-color:var(--oro); background:rgba(215,169,74,0.1); }
+  .artist-row .dot{ width:36px; height:36px; flex:0 0 auto; background:linear-gradient(150deg,#3a2f22,#14110d); }
+  .artist-row .an{ font-size:13px; font-weight:700; }
+  .artist-row .ac{ font-size:10px; color:var(--muted); }
+  .new-artist-btn{ width:100%; margin-top:6px; background:transparent; border:1px dashed var(--muted); color:var(--muted); padding:12px; font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; }
+  .new-artist-btn:hover{ border-color:var(--oro); color:var(--oro); }
+
+  .palette-legend{ margin-top:26px; padding-top:20px; border-top:1px solid rgba(255,255,255,0.08); }
+  .pl-item{ display:flex; align-items:center; gap:10px; margin-bottom:8px; font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.4px; }
+  .pl-dot{ width:16px; height:16px; border-radius:50%; flex:0 0 auto; border:1px solid rgba(255,255,255,0.2); }
+
+  .admin-main{ padding:28px 32px 60px; }
+  .panel-card{ background:var(--beige); color:var(--ink); padding:24px; margin-bottom:26px; }
+  .panel-card h2{ font-family:'Inter'; font-weight:800; font-size:17px; text-transform:uppercase; margin-bottom:2px; letter-spacing:0.4px; }
+  .panel-sub{ font-size:11px; color:#5a5648; margin-bottom:18px; }
+
+  .field-grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px; }
+  .field-grid.full{ grid-template-columns:1fr; }
+  .field label{ display:block; font-size:10px; font-weight:800; text-transform:uppercase; color:var(--oro-dim); margin-bottom:6px; letter-spacing:0.5px; }
+  .field input, .field select, .field textarea{ width:100%; border:1px solid var(--ink); background:#fff; color:var(--ink); padding:10px 12px; font-family:'Inter'; font-size:13px; }
+  .field textarea{ resize:vertical; min-height:70px; }
+  .field input:focus, .field select:focus, .field textarea:focus{ outline:2px solid var(--oro); }
+
+  .panel-actions{ display:flex; gap:12px; margin-top:6px; flex-wrap:wrap; }
+  .btn-save{ background:var(--ink); color:var(--crema); border:none; padding:11px 20px; font-weight:800; font-size:11px; text-transform:uppercase; letter-spacing:0.6px; }
+  .btn-save:hover{ background:var(--oro-dim); color:var(--ink); }
+  .btn-cancel{ background:transparent; border:1px solid var(--ink); color:var(--ink); padding:9px 18px; font-weight:700; font-size:11px; text-transform:uppercase; }
+
+  .content-toolbar{ display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; flex-wrap:wrap; gap:10px; }
+  .btn-add-content{ background:var(--oliva); color:var(--crema); border:none; padding:10px 16px; font-weight:800; font-size:11px; text-transform:uppercase; letter-spacing:0.5px; }
+  .btn-add-content:hover{ background:var(--oro-dim); color:var(--ink); }
+
+  .content-row{ display:flex; align-items:center; gap:14px; padding:12px 4px; border-bottom:1px dashed #b9b3a0; }
+  .content-row:last-child{ border-bottom:none; }
+  .type-badge{ font-size:9px; font-weight:800; text-transform:uppercase; padding:4px 8px; flex:0 0 auto; color:var(--crema); letter-spacing:0.4px; }
+  .type-badge.audio{ background:var(--oro-dim); color:var(--ink); }
+  .type-badge.video{ background:var(--ink); }
+  .type-badge.foto{ background:var(--madera); color:var(--ink); }
+  .type-badge.combo{ background:var(--oliva); }
+  .content-title{ flex:1; font-weight:600; font-size:13px; }
+  .content-date{ font-size:11px; color:#5a5648; flex:0 0 auto; }
+  .content-state{ font-size:10px; font-weight:700; flex:0 0 auto; padding:3px 8px; border:1px solid #5a5648; text-transform:uppercase; }
+  .content-state.pub{ border-color:#3a5a2e; color:#3a5a2e; }
+  .btn-icon{ background:none; border:1px solid var(--ink); width:28px; height:28px; font-size:12px; flex:0 0 auto; padding:0; }
+  .btn-icon:hover{ background:var(--ink); color:var(--crema); }
+  .btn-icon.del:hover{ background:#a13333; border-color:#a13333; }
+
+  .add-form{ display:none; border-top:1px dashed #b9b3a0; margin-top:16px; padding-top:16px; }
+  .add-form.open{ display:block; }
+  .dropzone{ border:1px dashed #5a5648; padding:20px; text-align:center; font-size:12px; color:#5a5648; margin-bottom:14px; cursor:pointer; }
+  .dropzone:hover{ border-color:var(--oro-dim); color:var(--oro-dim); }
+
+  @media(max-width:640px){ .nav-links{ display:none; } .field-grid{ grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<div class="grain"></div>
+
+<!-- ============ HOME ============ -->
+<div id="home">
+
+  <nav class="nav">
+    <div class="brand"><div class="mark"><i></i><i></i><i></i></div><div class="wordmark">LA CUADRA</div></div>
+    <div class="nav-links">
+      <a onclick="document.getElementById('muro').scrollIntoView()">Inicio</a>
+      <a onclick="document.getElementById('formatos').scrollIntoView()">Formatos</a>
+      <a onclick="document.getElementById('muro').scrollIntoView()">Muro</a>
+      <a onclick="verPerfil()">Artistas</a>
+    </div>
+    <div class="nav-right"><button class="btn-gold" onclick="document.getElementById('muro').scrollIntoView()">Ver el muro</button></div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <span class="eyebrow">Audio · Cultura · Barrio</span>
+      <h1>SONIDO DE<span class="g">BARRIO REAL</span></h1>
+      <p class="hero-sub">
+        Portafolios digitales para artistas urbanos de Medellín. Un solo lugar donde tu música, tu video
+        y tus fotos se combinan en formatos nuevos — y donde nosotros administramos cada detalle por vos.
+      </p>
+      <div class="hero-actions">
+        <button class="btn-gold" onclick="verPerfil()">Ver artistas</button>
+        <button class="btn-outline" onclick="document.getElementById('formatos').scrollIntoView()">Cómo funciona</button>
+      </div>
+    </div>
+    <div class="hero-side">
+      <span class="eyebrow">Más que música</span>
+      <div>Cultura<br>Barrio<br>En movimiento</div>
+    </div>
+  </section>
+
+  <div class="strip">
+    <div class="strip-item"><div class="ico">◆</div><span>Portafolios digitales</span></div>
+    <div class="strip-item"><div class="ico">♪</div><span>Audio en alta calidad</span></div>
+    <div class="strip-item"><div class="ico">▣</div><span>Fotografía de estudio</span></div>
+    <div class="strip-item"><div class="ico">✦</div><span>Combos / formatos mixtos</span></div>
+    <div class="strip-item"><div class="ico">◐</div><span>Gestión de artista</span></div>
+    <div class="strip-item"><div class="ico">▲</div><span>Eventos y showcases</span></div>
+  </div>
+
+  <div class="split" id="formatos">
+    <div class="split-text">
+      <span class="eyebrow">Contenido real</span>
+      <h2>UN FORMATO<br>PARA CADA HISTORIA</h2>
+      <p>Desde un demo grabado en el celular hasta una sesión de estudio completa — cada artista tiene su
+      espacio, y cada pieza se pega al muro tal como fue hecha.</p>
+      <a href="#muro">Conocé el muro completo →</a>
+    </div>
+    <div class="shots">
+      <div class="shot"><span class="label">Música en vivo</span></div>
+      <div class="shot v2"><span class="label">Sesiones de estudio</span></div>
+      <div class="shot v3"><span class="label">Retratos y prensa</span></div>
+      <div class="shot v4"><span class="label">Eventos y barrio</span></div>
+      <div class="shot quote"><p>"El sonido también construye barrio."</p></div>
+    </div>
+  </div>
+
+  <div class="section-head" id="muro">
+    <h2>El muro de hoy</h2>
+    <p>Lo último publicado: canciones, clips, fotos y combos mezclados de cada artista.</p>
+  </div>
+
+  <div class="muro">
+
+    <div class="card">
+      <span class="card-kicker">Combo · Audio + Video</span>
+      <div class="thumb combo"><div class="combo-label">Se ve y suena</div></div>
+      <div class="card-body">
+        <h3>Ceniza en la 13</h3>
+        <div class="meta">Comuna 13 · 2:58</div>
+        <div class="card-foot"><span class="artist-link" onclick="verPerfil()">Kymer Flow</span><span>Hoy</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="card-kicker">Foto</span>
+      <div class="thumb photo"><div class="play-dot"></div></div>
+      <div class="card-body">
+        <h3>Ensayo, terraza</h3>
+        <div class="meta">Manrique</div>
+        <div class="card-foot"><span class="artist-link">La Niña Brava</span><span>Ayer</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="card-kicker">Audio</span>
+      <div class="wave">
+        <i style="height:30%"></i><i style="height:70%"></i><i style="height:45%"></i><i style="height:90%"></i>
+        <i style="height:35%"></i><i style="height:60%"></i><i style="height:20%"></i><i style="height:80%"></i>
+      </div>
+      <div class="card-body">
+        <h3>Frecuencia Robledo</h3>
+        <div class="meta">Freestyle · 3:41</div>
+        <div class="card-foot"><span class="artist-link">Rekrea</span><span>Hoy</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="card-kicker">Video</span>
+      <div class="thumb"><div class="play-dot"><span></span></div></div>
+      <div class="card-body">
+        <h3>Grabando en el bus</h3>
+        <div class="meta">Behind the scenes</div>
+        <div class="card-foot"><span class="artist-link">Sonido Belén</span><span>2 días</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <div>© La Cuadra — Medellín, Colombia</div>
+    <div class="tagline"><span>Territorio</span>·<span>Cultura</span>·<span>Comunidad</span></div>
+    <div style="display:flex; gap:18px; align-items:center;">
+      <span>Medellín, Colombia</span>
+      <span class="admin-access" onclick="verAdmin()">Acceso admin →</span>
+    </div>
+  </footer>
+
+</div>
+
+<!-- ============ PERFIL ============ -->
+<div id="profile">
+  <div class="profile-wrap">
+    <div class="profile-side">
+      <button class="back-btn" onclick="verHome()">← Volver al muro</button>
+      <span class="eyebrow">Portafolio de artista</span>
+      <h1>Kymer<br>Flow</h1>
+      <div class="profile-tags">
+        <span class="ptag fill">Comuna 13</span>
+        <span class="ptag">Trap / Reggaetón</span>
+      </div>
+      <ul class="profile-nav">
+        <li>Música</li><li>Videos</li><li>Fotos</li><li>Prensa</li><li>Eventos</li><li>Contacto</li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="profile-hero">
+        <h2>Kymer Flow</h2>
+        <div class="role">Música que transforma el barrio</div>
+        <div class="profile-actions">
+          <button class="btn-gold">Escuchar</button>
+          <button class="btn-outline">Booking</button>
+        </div>
+        <div class="player">
+          <div class="pd"></div>
+          <div class="track">
+            <b>Ceniza en la 13</b>
+            <span>Kymer Flow · 2:58</span>
+            <div class="bar"><i></i></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><b>18.4K</b><span>Oyentes/mes</span></div>
+        <div class="stat"><b>27</b><span>Combos</span></div>
+        <div class="stat"><b>9</b><span>Videos</span></div>
+        <div class="stat"><b>2021</b><span>En La Cuadra desde</span></div>
+      </div>
+
+      <div class="profile-cols">
+        <div class="pcol"><h3>Música</h3><div class="sub">Lo más reciente</div><div class="mini"></div></div>
+        <div class="pcol"><h3>Galería</h3><div class="sub">Momentos que cuentan</div><div class="mini"></div></div>
+        <div class="pcol"><h3>Videos</h3><div class="sub">Narrativas en movimiento</div><div class="mini"></div></div>
+        <div class="pcol"><h3>Contacto</h3><div class="sub">Booking y prensa</div>
+          <p style="font-size:12px; color:var(--muted); line-height:1.6;">manager@lacuadra.co<br>Medellín, Colombia</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ ADMIN ============ -->
+<div id="admin">
+
+  <div class="admin-top">
+    <div class="admin-top-left">
+      <button class="back-btn" onclick="verHome()">← Salir al muro</button>
+      <div>
+        <h1>Panel de control</h1>
+        <div class="admin-note">Solo vos ves esto. En producción va detrás de login.</div>
+      </div>
+    </div>
+    <span class="admin-badge">Modo administrador</span>
+  </div>
+
+  <div class="admin-grid">
+    <div class="admin-sidebar">
+      <h3>Artistas</h3>
+      <div id="artistList"></div>
+      <button class="new-artist-btn" onclick="nuevoArtista()">+ Nuevo artista</button>
+
+      <div class="palette-legend">
+        <h3>Paleta</h3>
+        <div class="pl-item"><span class="pl-dot" style="background:#1a1815;"></span>Grafito</div>
+        <div class="pl-item"><span class="pl-dot" style="background:#b9834c;"></span>Madera</div>
+        <div class="pl-item"><span class="pl-dot" style="background:#454a30;"></span>Verde oliva</div>
+        <div class="pl-item"><span class="pl-dot" style="background:#e9e1cb;"></span>Beige</div>
+        <div class="pl-item"><span class="pl-dot" style="background:#d7a94a;"></span>Oro</div>
+      </div>
+    </div>
+
+    <div class="admin-main">
+
+      <div class="panel-card">
+        <h2 id="formTitle">Editar artista</h2>
+        <div class="panel-sub">Esta información se refleja directo en el portafolio público.</div>
+        <div class="field-grid">
+          <div class="field"><label>Nombre artístico</label><input id="f-nombre" type="text"></div>
+          <div class="field"><label>Comuna / barrio</label>
+            <select id="f-comuna">
+              <option>Comuna 13</option><option>Manrique</option><option>Robledo</option>
+              <option>Belén</option><option>Aranjuez</option><option>Buenos Aires</option>
+            </select>
+          </div>
+        </div>
+        <div class="field-grid">
+          <div class="field"><label>Género</label><input id="f-genero" type="text"></div>
+          <div class="field"><label>Foto de perfil</label><input id="f-foto" type="text" placeholder="nombre-archivo.jpg"></div>
+        </div>
+        <div class="field-grid full">
+          <div class="field"><label>Biografía</label><textarea id="f-bio"></textarea></div>
+        </div>
+        <div class="panel-actions">
+          <button class="btn-save" onclick="guardarArtista()">Guardar cambios</button>
+          <button class="btn-cancel" onclick="cargarArtistaActual()">Cancelar</button>
+        </div>
+      </div>
+
+      <div class="panel-card">
+        <div class="content-toolbar">
+          <div>
+            <h2 style="margin-bottom:2px;">Contenidos</h2>
+            <div class="panel-sub" style="margin-bottom:0;">Música, video, fotos y combos de este artista</div>
+          </div>
+          <button class="btn-add-content" onclick="toggleAddForm()">+ Agregar contenido</button>
+        </div>
+
+        <div id="contentTable"></div>
+
+        <div class="add-form" id="addForm">
+          <div class="field-grid">
+            <div class="field"><label>Tipo</label>
+              <select id="nc-tipo">
+                <option value="audio">Audio</option><option value="video">Video</option>
+                <option value="foto">Foto</option><option value="combo">Combo (mixto)</option>
+              </select>
+            </div>
+            <div class="field"><label>Título</label><input id="nc-titulo" type="text" placeholder="Nombre del contenido"></div>
+          </div>
+          <div class="field-grid">
+            <div class="field"><label>Fecha</label><input id="nc-fecha" type="date"></div>
+            <div class="field"><label>Estado</label>
+              <select id="nc-estado"><option value="pub">Publicado</option><option value="brd">Borrador</option></select>
+            </div>
+          </div>
+          <div class="dropzone">📎 Soltá el archivo acá o hacé clic para elegirlo</div>
+          <div class="panel-actions">
+            <button class="btn-save" onclick="guardarContenido()">Publicar en el muro</button>
+            <button class="btn-cancel" onclick="toggleAddForm()">Cancelar</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  function verPerfil(){ mostrar('profile'); }
+  function verHome(){ mostrar('home'); }
+  function verAdmin(){ mostrar('admin'); cargarArtistaActual(); }
+  function mostrar(id){
+    ['home','profile','admin'].forEach(s=>document.getElementById(s).style.display = (s===id?'block':'none'));
+    window.scrollTo(0,0);
+  }
+
+  const ARTISTS = {
+    kymer:{ nombre:'Kymer Flow', comuna:'Comuna 13', genero:'Trap / Reggaetón', foto:'kymer-perfil.jpg',
+      bio:'Empezó grabando con el micrófono del celular en San Javier. Mezcla temas con clips de las escaleras eléctricas.',
+      contenidos:[
+        {tipo:'combo', titulo:'Ceniza en la 13', fecha:'2024-08-01', estado:'pub'},
+        {tipo:'audio', titulo:'Perreo de barrio (demo)', fecha:'2024-07-20', estado:'brd'},
+        {tipo:'video', titulo:'Freestyle, escaleras eléctricas', fecha:'2024-07-10', estado:'pub'},
+      ]},
+    nina:{ nombre:'La Niña Brava', comuna:'Manrique', genero:'Dancehall urbano', foto:'nina-perfil.jpg',
+      bio:'Voz de Manrique. Combina fotos de ensayo con loops cortos de sus temas en proceso.',
+      contenidos:[
+        {tipo:'foto', titulo:'Ensayo, terraza', fecha:'2024-08-03', estado:'pub'},
+        {tipo:'combo', titulo:'Retrato con hook', fecha:'2024-07-30', estado:'pub'},
+      ]},
+    rekrea:{ nombre:'Rekrea', comuna:'Robledo', genero:'Hip-hop / Freestyle', foto:'rekrea-perfil.jpg',
+      bio:'Freestyler de Robledo, graba directo en la calle sin muchas vueltas.',
+      contenidos:[
+        {tipo:'audio', titulo:'Frecuencia Robledo', fecha:'2024-08-04', estado:'pub'},
+        {tipo:'video', titulo:'Verso improvisado, esquina', fecha:'2024-07-28', estado:'pub'},
+      ]},
+    belen:{ nombre:'Sonido Belén', comuna:'Belén', genero:'Afrobeat urbano', foto:'belen-perfil.jpg',
+      bio:'Colectivo de Belén, documentan el proceso tanto como el resultado.',
+      contenidos:[
+        {tipo:'video', titulo:'Grabando en el bus', fecha:'2024-08-02', estado:'pub'},
+        {tipo:'foto', titulo:'Mural nuevo, Aranjuez', fecha:'2024-07-27', estado:'pub'},
+      ]},
+  };
+  let current = 'kymer';
+
+  function renderArtistList(){
+    const box = document.getElementById('artistList');
+    box.innerHTML = '';
+    Object.keys(ARTISTS).forEach(key=>{
+      const a = ARTISTS[key];
+      const row = document.createElement('div');
+      row.className = 'artist-row' + (key===current ? ' active':'');
+      row.onclick = ()=>{ current = key; renderArtistList(); cargarArtistaActual(); };
+      row.innerHTML = `<div class="dot"></div><div><div class="an">${a.nombre}</div><div class="ac">${a.comuna} · ${a.contenidos.length} contenidos</div></div>`;
+      box.appendChild(row);
+    });
+  }
+
+  function cargarArtistaActual(){
+    const a = ARTISTS[current];
+    document.getElementById('formTitle').textContent = 'Editar artista';
+    document.getElementById('f-nombre').value = a.nombre;
+    document.getElementById('f-comuna').value = a.comuna;
+    document.getElementById('f-genero').value = a.genero;
+    document.getElementById('f-foto').value = a.foto;
+    document.getElementById('f-bio').value = a.bio;
+    document.getElementById('addForm').classList.remove('open');
+    renderContentTable();
+  }
+
+  function guardarArtista(){
+    const a = ARTISTS[current];
+    a.nombre = document.getElementById('f-nombre').value;
+    a.comuna = document.getElementById('f-comuna').value;
+    a.genero = document.getElementById('f-genero').value;
+    a.foto = document.getElementById('f-foto').value;
+    a.bio = document.getElementById('f-bio').value;
+    renderArtistList();
+  }
+
+  function renderContentTable(){
+    const a = ARTISTS[current];
+    const box = document.getElementById('contentTable');
+    box.innerHTML = '';
+    if(a.contenidos.length === 0){
+      box.innerHTML = '<div class="panel-sub">Este artista todavía no tiene contenido.</div>';
+      return;
+    }
+    a.contenidos.forEach((c, i)=>{
+      const row = document.createElement('div');
+      row.className = 'content-row';
+      row.innerHTML = `
+        <span class="type-badge ${c.tipo}">${c.tipo}</span>
+        <span class="content-title">${c.titulo}</span>
+        <span class="content-date">${c.fecha}</span>
+        <span class="content-state ${c.estado==='pub'?'pub':''}">${c.estado==='pub'?'Publicado':'Borrador'}</span>
+        <button class="btn-icon del" onclick="eliminarContenido(${i})">✕</button>
+      `;
+      box.appendChild(row);
+    });
+  }
+
+  function toggleAddForm(){ document.getElementById('addForm').classList.toggle('open'); }
+
+  function guardarContenido(){
+    const titulo = document.getElementById('nc-titulo').value.trim();
+    if(!titulo){ return; }
+    ARTISTS[current].contenidos.unshift({
+      tipo: document.getElementById('nc-tipo').value,
+      titulo: titulo,
+      fecha: document.getElementById('nc-fecha').value || new Date().toISOString().slice(0,10),
+      estado: document.getElementById('nc-estado').value,
+    });
+    document.getElementById('nc-titulo').value = '';
+    toggleAddForm();
+    renderContentTable();
+    renderArtistList();
+  }
+
+  function eliminarContenido(i){
+    ARTISTS[current].contenidos.splice(i,1);
+    renderContentTable();
+    renderArtistList();
+  }
+
+  function nuevoArtista(){
+    const key = 'nuevo' + Date.now();
+    ARTISTS[key] = { nombre:'Nuevo artista', comuna:'Comuna 13', genero:'', foto:'', bio:'', contenidos:[] };
+    current = key;
+    renderArtistList();
+    cargarArtistaActual();
+    document.getElementById('f-nombre').focus();
+  }
+
+  renderArtistList();
+</script>
+
+</body>
+</html>
